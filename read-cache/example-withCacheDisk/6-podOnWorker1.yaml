@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: foo
+  namespace: default
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: rancher50-worker1
+  restartPolicy: Always
+  containers:
+  - name: foo
+    image: naturlich/ubuntu2004:latest
+    command:
+      - "sleep"
+      - "604800"
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+    - name: volv
+      mountPath: /data
+    ports:
+    - containerPort: 80
+  volumes:
+  - name: volv
+    persistentVolumeClaim:
+      claimName: vol-pvc-2
